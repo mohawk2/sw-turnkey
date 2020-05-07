@@ -64,8 +64,7 @@
         if (configObj.network_first && event.request.url.match(configObj.network_first.re)) {
           return makeNetworkFirstPromise(event.request, cacheResponse);
         }
-        var fetchPromise = makeFetchCachePromise(event.request).catch(function() {});
-        return cacheResponse || fetchPromise;
+        return cacheResponse || makeFetchCachePromise(event.request).catch(function() {});
       });
     }));
   });
