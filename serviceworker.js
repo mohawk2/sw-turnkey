@@ -45,9 +45,10 @@
     }).then(function(cache) {
       console.log("Caching: ", configObj.precache_urls);
       return cache.addAll(configObj.precache_urls);
+    }).then(function() {
+      console.log("The SW is now installed");
     });
     event.waitUntil(promise);
-    console.log("The SW is now installed");
   });
 
   self.addEventListener("fetch", function(event) {
