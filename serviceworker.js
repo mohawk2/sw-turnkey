@@ -51,9 +51,8 @@
   });
 
   self.addEventListener("fetch", function(event) {
-    var configObj;
     event.respondWith(makeFetchConfigPromise(configURL).then(function(response) {
-      configObj = response;
+      var configObj = response;
       if (configObj.network_only && event.request.url.match(configObj.network_only.re)) {
         return fetch(event.request).catch(function() {});
       }
