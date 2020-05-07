@@ -62,7 +62,7 @@ and it says "Hi". You want that to work offline!
 ```
 <!doctype html>
 <body>
-<input type=button onclick="alert('Hi')" />
+<input type=button onclick="alert('Hi')" value="Say Hi" />
 </body>
 ```
 
@@ -90,7 +90,7 @@ Also place `serviceworker-config.json` with these contents:
 <!doctype html>
 <script src="serviceworker-install.js"></script>
 <body>
-<input type=button onclick="alert('Hi')" />
+<input type=button onclick="alert('Hi')" value="Say Hi" />
 </body>
 ```
 
