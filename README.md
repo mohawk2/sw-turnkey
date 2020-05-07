@@ -17,9 +17,9 @@ website, configure a JSON file, add one line to your HTML, and go?
 
 ## How to use these files
 
-* Drop `serviceworker-install.js` and `serviceworker.js` wherever you see fit
+* Drop `serviceworker-install.js` and `serviceworker.js` at the top level of your app, so that its "scope" covers the whole app
 
-* Add this line to your HTML (maybe adjusting for the location of the above):
+* Add this line to all your HTML (maybe adjusting for location):
 
 ```
 <script src="serviceworker-install.js"></script>
