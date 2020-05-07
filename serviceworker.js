@@ -9,6 +9,9 @@
       return makeNetworkFirstPromise(request, cacheResponse);
     }).then(function(response) {
       return response.json();
+    }).catch(function(e) {
+      console.log('Error getting config:', e);
+      throw e;
     });
   }
 
