@@ -42,7 +42,7 @@
   self.addEventListener("install", function(event) {
     console.log("Installing SW...");
     var configObj;
-    var promise = makeFetchConfigPromise(configURL).then(function(response) {
+    event.waitUntil(makeFetchConfigPromise(configURL).then(function(response) {
       configObj = response;
       return caches.open(cachename);
     }).then(function(cache) {
@@ -50,8 +50,7 @@
       return cache.addAll(configObj.precache_urls);
     }).then(function() {
       console.log("The SW is now installed");
-    });
-    event.waitUntil(promise);
+    }));
   });
 
   self.addEventListener("fetch", function(event) {
