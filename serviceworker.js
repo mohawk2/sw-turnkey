@@ -17,7 +17,7 @@
 
   function makeFetchCachePromise(request) {
     return fetch(request).then(function (networkResponse) {
-      var nrClone = networkResponse.clone();
+      var nrClone = networkResponse.clone(); // capture here else extra ticks will make body be read by time get to inner .then
       if (networkResponse.ok) {
         caches.open(cachename).then(function(cache) {
           return cache.put(request, nrClone);
