@@ -36,7 +36,11 @@
   self.addEventListener("install", event => {
     console.log("Installing SW...");
     var configObj, request = new Request(configURL);
-    event.waitUntil(jsonCachingFetch(request).then(response => {
+    event.waitUntil(caches.keys().then(
+      ks => Promise.all(ks.map(k => caches.open(k)))
+    ).then(
+      cs => Promise.all(cs.map(c => c.delete(request)))
+    ).then(() => jsonCachingFetch(request)).then(response => {
       configObj = response;
       return caches.open(cachename);
     }).then(cache => {

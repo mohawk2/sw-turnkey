@@ -52,6 +52,10 @@ regular expression. A fetched URL is checked against each in the above
 order. When it matches, it will use that strategy. If none match, will
 fall back to cache first (aka "stale while revalidate").
 
+When the service worker `install` runs, it finds and removes from all its
+available caches, cached versions of the config. This is to avoid older
+versions of the config being found and not overwritten, causing chaos.
+
 ## Example 1: Single-Page App
 
 See in the supplied directory `sample-app` for the actual files.
