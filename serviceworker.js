@@ -24,12 +24,9 @@
   }
 
   function cachingFetchOrCached(request, cacheResponse) {
-    var originalResponse;
-    return cachingFetch(request).then(response => {
-      if (response.ok) return response;
-      originalResponse = response;
-      throw "Error";
-    }).catch(error => cacheResponse || originalResponse);
+    return cachingFetch(request).then(
+      response => response.ok ? response : cacheResponse
+    ).catch(error => cacheResponse);
   }
 
   function maybeMatch(configObj, key, value) {
