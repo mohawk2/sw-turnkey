@@ -6,7 +6,7 @@
   function jsonCachingFetch(url) {
     var request = new Request(url);
     return caches.match(request).then(function(cacheResponse) {
-      return makeNetworkFirstPromise(request, cacheResponse);
+      return cachingFetchOrCached(request, cacheResponse);
     }).then(function(response) {
       return response.json();
     }).catch(function(e) {
@@ -27,7 +27,7 @@
     });
   }
 
-  function makeNetworkFirstPromise(request, cacheResponse) {
+  function cachingFetchOrCached(request, cacheResponse) {
     var originalResponse;
     return cachingFetch(request).then(function(response) {
       if (response.ok) return response;
@@ -68,7 +68,7 @@
           return cacheResponse;
         }
         if (maybeMatch(configObj, 'network_first', event.request.url)) {
-          return makeNetworkFirstPromise(event.request, cacheResponse);
+          return cachingFetchOrCached(event.request, cacheResponse);
         }
         return cacheResponse || cachingFetch(event.request).catch(function() {});
       });
