@@ -3,7 +3,7 @@
   var configURL = "serviceworker-config.json";
   var cachename = "myAppCache"; // if in config, can't work offline as not know which cache to fetch/store config
 
-  function makeFetchConfigPromise(url) {
+  function jsonCachingFetch(url) {
     var request = new Request(url);
     return caches.match(request).then(function(cacheResponse) {
       return makeNetworkFirstPromise(request, cacheResponse);
@@ -46,7 +46,7 @@
   self.addEventListener("install", function(event) {
     console.log("Installing SW...");
     var configObj;
-    event.waitUntil(makeFetchConfigPromise(configURL).then(function(response) {
+    event.waitUntil(jsonCachingFetch(configURL).then(function(response) {
       configObj = response;
       return caches.open(cachename);
     }).then(function(cache) {
@@ -58,7 +58,7 @@
   });
 
   self.addEventListener("fetch", function(event) {
-    event.respondWith(makeFetchConfigPromise(configURL).then(function(response) {
+    event.respondWith(jsonCachingFetch(configURL).then(function(response) {
       var configObj = response;
       if (maybeMatch(configObj, 'network_only', event.request.url)) {
         return fetch(event.request).catch(function() {});
