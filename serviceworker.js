@@ -6,7 +6,8 @@
   function jsonCachingFetch(url) {
     var request = new Request(url);
     return caches.match(request).then(cacheResponse => {
-      return cachingFetchOrCached(request, cacheResponse);
+      var cF = cachingFetch(request); // revalidate, but return cached if true
+      return cacheResponse || cF;
     }).then(response => response.json()).catch(e => {
       console.log('Error getting config:', e);
       throw e;
