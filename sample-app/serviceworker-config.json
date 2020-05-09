@@ -1,0 +1,11 @@
+{
+  "precache_urls": [
+    "index.html",
+    "serviceworker-install.js",
+    "serviceworker.js",
+    "serviceworker-config.json"
+  ],
+  "network_only": {
+    "re": "nevercache\\.html"
+  }
+}

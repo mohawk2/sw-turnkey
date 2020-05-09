@@ -54,6 +54,8 @@ fall back to "stale while revalidate".
 
 ## Example 1: Single-Page App
 
+See in the supplied directory `sample-app` for the actual files.
+
 Imagine you have a single-page app (SPA) with a button that you click
 and it says "Hi". You want that to work offline!
 
