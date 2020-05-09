@@ -50,7 +50,7 @@ Array of URLs to precache when the service worker is installed.
 The values of these are all hashes with currently one key, "re" - a
 regular expression. A fetched URL is checked against each in the above
 order. When it matches, it will use that strategy. If none match, will
-fall back to "stale while revalidate".
+fall back to cache first (aka "stale while revalidate").
 
 ## Example 1: Single-Page App
 
@@ -69,7 +69,7 @@ and it says "Hi". You want that to work offline!
 ```
 
 To make this available offline, and generally be fast, we will use the
-default "stale while revalidate" strategy, together with pre-caching.
+default cache first strategy, together with pre-caching.
 
 To use `sw-turnkey` here, drop `serviceworker-install.js` and
 `serviceworker.js` into the same directory as `index.html`.
@@ -116,7 +116,7 @@ and you don't mind it not working offline.
 
 You'll need to add the same `serviceworker.js` and `serviceworker-install.js`.
 
-For most of this content, the default "stale while revalidate" strategy,
+For most of this content, the default cache first strategy,
 together with pre-caching works well, but we'll also use `network_only`
 for `dynamic.cgi`. So we'll use this `serviceworker-config.json`:
 
