@@ -39,6 +39,10 @@
     });
   }
 
+  function maybeMatch(configObj, key, value) {
+    return configObj[key] && value.match(configObj[key].re);
+  }
+
   self.addEventListener("install", function(event) {
     console.log("Installing SW...");
     var configObj;
@@ -56,14 +60,14 @@
   self.addEventListener("fetch", function(event) {
     event.respondWith(makeFetchConfigPromise(configURL).then(function(response) {
       var configObj = response;
-      if (configObj.network_only && event.request.url.match(configObj.network_only.re)) {
+      if (maybeMatch(configObj, 'network_only', event.request.url)) {
         return fetch(event.request).catch(function() {});
       }
       return caches.match(event.request).then(function(cacheResponse) {
-        if (cacheResponse && configObj.cache_no_revalidate && event.request.url.match(configObj.cache_no_revalidate.re)) {
+        if (cacheResponse && maybeMatch(configObj, 'cache_no_revalidate', event.request.url)) {
           return cacheResponse;
         }
-        if (configObj.network_first && event.request.url.match(configObj.network_first.re)) {
+        if (maybeMatch(configObj, 'network_first', event.request.url)) {
           return makeNetworkFirstPromise(event.request, cacheResponse);
         }
         return cacheResponse || makeFetchCachePromise(event.request).catch(function() {});
