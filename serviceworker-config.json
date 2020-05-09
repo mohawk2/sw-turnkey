@@ -11,7 +11,7 @@
   "network_only": {
     "re": "cachenever\\.js"
   },
-  "cache_no_revalidate": {
+  "cache_only": {
     "re": "fabric\\.min|gif.*js"
   },
   "network_first": {

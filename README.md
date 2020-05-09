@@ -43,7 +43,7 @@ Array of URLs to precache when the service worker is installed.
 
 * `network_only` - don't cache at all
 
-* `cache_no_revalidate` - once cached, never look up again
+* `cache_only` - once cached, never look up again
 
 * `network_first` - fetch from the network; if that fails, return cached
 
