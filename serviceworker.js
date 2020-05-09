@@ -63,7 +63,9 @@
       if (maybeMatch(configObj, 'network_only', event.request.url)) {
         return fetch(event.request).catch(function() {});
       }
-      return caches.match(event.request).then(function(cacheResponse) {
+      return caches.open(cachename).then(function(cache) {
+        return cache.match(event.request);
+      }).then(function(cacheResponse) {
         if (cacheResponse && maybeMatch(configObj, 'cache_only', event.request.url)) {
           return cacheResponse;
         }
