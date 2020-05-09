@@ -15,7 +15,7 @@
     });
   }
 
-  function makeFetchCachePromise(request) {
+  function cachingFetch(request) {
     return fetch(request).then(function (networkResponse) {
       var nrClone = networkResponse.clone(); // capture here else extra ticks will make body be read by time get to inner .then
       if (networkResponse.ok) {
@@ -29,7 +29,7 @@
 
   function makeNetworkFirstPromise(request, cacheResponse) {
     var originalResponse;
-    return makeFetchCachePromise(request).then(function(response) {
+    return cachingFetch(request).then(function(response) {
       if (response.ok) return response;
       originalResponse = response;
       throw "Error";
@@ -70,7 +70,7 @@
         if (maybeMatch(configObj, 'network_first', event.request.url)) {
           return makeNetworkFirstPromise(event.request, cacheResponse);
         }
-        return cacheResponse || makeFetchCachePromise(event.request).catch(function() {});
+        return cacheResponse || cachingFetch(event.request).catch(function() {});
       });
     }));
   });
