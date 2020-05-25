@@ -17,7 +17,9 @@
     return fetch(request).then(networkResponse => {
       var nrClone = networkResponse.clone(); // capture here else extra ticks will make body be read by time get to inner .then
       if (networkResponse.ok) {
-        caches.open(cachename).then(cache => cache.put(request, nrClone));
+        caches.open(cachename).then(
+          cache => cache.put(request, nrClone)
+        ).catch(()=>{}); // caching error, typically from eg POST
       }
       return networkResponse;
     });
