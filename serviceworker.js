@@ -52,18 +52,19 @@
   });
 
   self.addEventListener("fetch", event => {
+    var url = event.request.url;
     event.respondWith(jsonCachingFetch(configURL).then(response => {
       var configObj = response;
-      if (maybeMatch(configObj, 'network_only', event.request.url)) {
+      if (maybeMatch(configObj, 'network_only', url)) {
         return fetch(event.request).catch(() => {});
       }
       return caches.open(cachename).then(
         cache => cache.match(event.request)
       ).then(cacheResponse => {
-        if (cacheResponse && maybeMatch(configObj, 'cache_only', event.request.url)) {
+        if (cacheResponse && maybeMatch(configObj, 'cache_only', url)) {
           return cacheResponse;
         }
-        if (maybeMatch(configObj, 'network_first', event.request.url)) {
+        if (maybeMatch(configObj, 'network_first', url)) {
           return cachingFetchOrCached(event.request, cacheResponse);
         }
         return cacheResponse || cachingFetch(event.request).catch(() => {});
