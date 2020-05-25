@@ -47,6 +47,8 @@ Array of URLs to precache when the service worker is installed.
 
 * `network_first` - fetch from the network; if that fails, return cached
 
+* `debug` - boolean value for whether to log cache hits and misses
+
 The values of these are all hashes with currently one key, "re" - a
 regular expression. A fetched URL is checked against each in the above
 order. When it matches, it will use that strategy. If none match, will

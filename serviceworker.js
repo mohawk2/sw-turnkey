@@ -56,17 +56,21 @@
     event.respondWith(jsonCachingFetch(configURL).then(response => {
       var configObj = response;
       if (maybeMatch(configObj, 'network_only', url)) {
+        if (configObj.debug) console.log('network_only', url);
         return fetch(event.request).catch(() => {});
       }
       return caches.open(cachename).then(
         cache => cache.match(event.request)
       ).then(cacheResponse => {
         if (cacheResponse && maybeMatch(configObj, 'cache_only', url)) {
+          if (configObj.debug) console.log('cache_only', url);
           return cacheResponse;
         }
         if (maybeMatch(configObj, 'network_first', url)) {
+          if (configObj.debug) console.log('network_first', url);
           return cachingFetchOrCached(event.request, cacheResponse);
         }
+        if (configObj.debug) console.log('cache_first', url);
         return cacheResponse || cachingFetch(event.request).catch(() => {});
       });
     }));
