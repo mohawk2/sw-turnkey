@@ -71,7 +71,8 @@
           return cachingFetchOrCached(event.request, cacheResponse);
         }
         if (configObj.debug) console.log('cache_first', url);
-        return cacheResponse || cachingFetch(event.request).catch(() => {});
+        var cF = cachingFetch(event.request).catch(() => {});
+        return cacheResponse || cF;
       });
     }));
   });
